@@ -66,7 +66,7 @@ app.get(`/users`, async function(req,res) {
 app.post('/make', (req,res) => { 
     let {body} = req
     let {username, password} = body
-        console.log(body)
+    
         console.log(username)
         console.log(password)
     hash(password, saltRounds)
