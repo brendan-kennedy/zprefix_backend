@@ -20,10 +20,22 @@ app.use(
     methods: "GET"
   }))
 
+  app.use(express.json())
+
 app.get('/', function(req,res) { 
     res.send('this is working')
-} )
+})
 
-app.use(express.json())
+app.get(`/blogs`, async function(req,res) { 
+    knex
+        .select('*')
+        .from('blogs')
+        .then(data => res.status(200).json(data))
+        .catch(err => 
+            res.status(404).json({message: 'data not found'})
+            )
+})
 
 
+
+module.exports = app
