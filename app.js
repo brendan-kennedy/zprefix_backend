@@ -4,7 +4,8 @@ const cors = require('cors')
 const bcrypt = require('bcrypt')
 const { 
     createNewUser,
-    retrieveUserPassword
+    retrieveUserPassword,
+    createNewBlog
 } = require ('./function') 
 
 const saltRounds = 10
@@ -36,7 +37,7 @@ app.get('/', function(req,res) {
 })
 
 
-//gives out the blogs of the user in question
+//displays all blogs in database
 
 app.get(`/blogs`, async function(req,res) { 
     knex
@@ -48,7 +49,47 @@ app.get(`/blogs`, async function(req,res) {
             )
 })
 
-//gives out the user data
+//displays one blog at a time
+
+app.get(`/blogs/:id`, async function(req,res) { 
+    let {id} = req.params
+    knex
+        .select('blog_title')
+        .from('blogs')
+        .where('id',id)
+        .then(data => res.status(200).json(data))
+        .catch(err => 
+            res.status(404).json({message: 'data not found'})
+            )
+})
+
+//makes a new blog post for a specific user
+
+app.post('/blogs/new', (req,res) => { 
+    let {body} = req
+    let {blog_title, blog_text,blog_date,user_id} = body
+        createNewBlog(blog_title, blog_text,blog_date, user_id)
+            .then((data) => res.status(200).json('New Blog Created'))
+            .catch((err) => res.status(501).json(err))
+    
+        .catch((err) => res.status(504).json(err))
+    })
+
+    //delete blog post
+
+    app.delete(`/blogs/:id`, function(req,res) { 
+        let {id} = req.params
+        knex
+            .delete('*')
+            .from('blogs')
+            .where('id',id)
+            .then(data => res.status(200).json('blog deleted'))
+            .catch(err => 
+                res.status(404).json({message: 'blog not found'})
+                )
+    })
+
+    //gives out the user data
 
 
 app.get(`/users`, async function(req,res) { 
