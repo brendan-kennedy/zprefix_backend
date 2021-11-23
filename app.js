@@ -134,7 +134,7 @@ app.post('/make', (req,res) => {
 
 //compares the password of someone trying to login 
 
-app.post('/login', (req,res) => { 
+app.post('/login/:id', (req,res) => { 
     let {body} = req
     let {username, password} = body
         retrieveUserPassword(username).then((encryptedPassword) => {
@@ -145,6 +145,19 @@ app.post('/login', (req,res) => {
             }))
             .catch((err) => res.status(405).json(err))
         })
+})
+
+app.get('/login/:id', (req,res) => { 
+    const {id} = req.params
+    console.log(id)
+    knex
+        .select('*')
+        .from('users')
+        .where('id',id)
+        .then(data => res.status(200).json(data))
+        .catch(err => 
+            res.status(404).json({message: 'data not found'})
+            )
 })
 
 module.exports = app
