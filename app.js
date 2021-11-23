@@ -54,7 +54,7 @@ app.get(`/blogs`, async function(req,res) {
 app.get(`/blogs/:id`, async function(req,res) { 
     let {id} = req.params
     knex
-        .select('blog_title')
+        .select('*')
         .from('blogs')
         .where('id',id)
         .then(data => res.status(200).json(data))
@@ -96,6 +96,19 @@ app.get(`/users`, async function(req,res) {
     knex
         .select('*')
         .from('users')
+        .then(data => res.status(200).json(data))
+        .catch(err => 
+            res.status(404).json({message: 'data not found'})
+            )
+})
+
+app.get(`/users/:id/blogs`, async function(req,res) { 
+    const {id} = req.params
+    console.log(id)
+    knex
+        .select('*')
+        .from('blogs')
+        .where('blog_user_id',id)
         .then(data => res.status(200).json(data))
         .catch(err => 
             res.status(404).json({message: 'data not found'})
