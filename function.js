@@ -15,4 +15,9 @@ function createNewBlog (blog_title,blog_text,blog_date, user_id){
 return knex("blogs").insert({blog_title: blog_title, blog_text: blog_text, blog_date: blog_date, blog_user_id: user_id})
 }
 
-module.exports = {createNewUser,retrieveUserPassword, createNewBlog}
+function editBlog (id,blog_title,blog_text,blog_date, user_id){
+    return knex("blogs").update({blog_title: blog_title, blog_text: blog_text, blog_date: blog_date, blog_user_id: user_id})
+    .where({id})    
+}
+
+module.exports = {createNewUser,retrieveUserPassword, createNewBlog, editBlog}

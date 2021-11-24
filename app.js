@@ -5,7 +5,8 @@ const bcrypt = require('bcrypt')
 const { 
     createNewUser,
     retrieveUserPassword,
-    createNewBlog
+    createNewBlog,
+    editBlog
 } = require ('./function') 
 
 const saltRounds = 10
@@ -71,6 +72,18 @@ app.post('/blogs/new', (req,res) => {
         createNewBlog(blog_title, blog_text,blog_date, blog_user_id)
 
             .then((data) => res.status(200).json('New Blog Created'))
+            .catch((err) => res.status(501).json(err))
+    
+        .catch((err) => res.status(504).json(err))
+    })
+
+//edits a current blog    
+app.patch('/blogs/:id', (req,res) => { 
+    let {id} = req.params
+    let {body} = req
+    let {blog_title, blog_text,blog_date,blog_user_id} = body
+        editBlog(id,blog_title, blog_text,blog_date, blog_user_id)
+            .then((data) => res.status(200).json('blog edited'))
             .catch((err) => res.status(501).json(err))
     
         .catch((err) => res.status(504).json(err))
