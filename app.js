@@ -160,4 +160,17 @@ app.get('/login/:username', (req,res) => {
             )
 })
 
+app.get('/users/:id', (req,res) => { 
+    const {id} = req.params
+    
+    knex
+        .select('*')
+        .from('users')
+        .where('id',id)
+        .then(data => res.status(200).json(data))
+        .catch(err => 
+            res.status(404).json({message: 'data not found'})
+            )
+})
+
 module.exports = app
