@@ -67,8 +67,9 @@ app.get(`/blogs/:id`, async function(req,res) {
 
 app.post('/blogs/new', (req,res) => { 
     let {body} = req
-    let {blog_title, blog_text,blog_date,user_id} = body
-        createNewBlog(blog_title, blog_text,blog_date, user_id)
+    let {blog_title, blog_text,blog_date,blog_user_id} = body
+        createNewBlog(blog_title, blog_text,blog_date, blog_user_id)
+
             .then((data) => res.status(200).json('New Blog Created'))
             .catch((err) => res.status(501).json(err))
     
