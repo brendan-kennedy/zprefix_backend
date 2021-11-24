@@ -25,7 +25,7 @@ app.use(morgan('dev'))
 app.use(
   cors({
     origin: "*",
-    methods: "GET"
+    methods: ["GET", 'PATCH',' POST','DELETE']
   }))
 
   app.use(express.json())
