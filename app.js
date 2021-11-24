@@ -134,26 +134,26 @@ app.post('/make', (req,res) => {
 
 //compares the password of someone trying to login 
 
-app.post('/login/:id', (req,res) => { 
+app.post('/login/:username', (req,res) => { 
     let {body} = req
     let {username, password} = body
         retrieveUserPassword(username).then((encryptedPassword) => {
             compare(password, encryptedPassword)
             .then((isMatch => {
                 if(isMatch) res.status(200).json("Correct Password")
-                else res.status(404).json("Incorrect Password")
+                else res.status(504).json("Incorrect Password")
             }))
-            .catch((err) => res.status(405).json(err))
+            .catch((err) => res.status(505).json(err))
         })
 })
 
-app.get('/login/:id', (req,res) => { 
-    const {id} = req.params
-    console.log(id)
+app.get('/login/:username', (req,res) => { 
+    const {username} = req.params
+    
     knex
         .select('*')
         .from('users')
-        .where('id',id)
+        .where('username',username)
         .then(data => res.status(200).json(data))
         .catch(err => 
             res.status(404).json({message: 'data not found'})
