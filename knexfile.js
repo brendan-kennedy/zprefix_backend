@@ -15,10 +15,11 @@ module.exports = {
   production: {
     client: 'pg',
     connection: {
-      host: process.env.DATABASE_URL,
-      user: "pg",
-      password: "bacon",
-      database: 'zprefix'
+      host: 'ec2-44-198-194-64.compute-1.amazonaws.com',
+      user: "yxylthxmnrhxml",
+      password: "37049d8b8e042806efffafa0dab4a740d040bac11a0ce089108e77714a2537c4",
+      database: 'd52r5r7dj20vro',
+      ssl: { rejectUnauthorized: false }
     },
     pool: {
       min: 2,
