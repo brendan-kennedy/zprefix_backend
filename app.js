@@ -47,9 +47,12 @@ app.get(`/blogs`, async function(req,res) {
         .select('*')
         .from('blogs')
         .then(data => res.status(200).json(data))
-        .catch(err => 
-            res.status(404).json({message: 'data not found'})
-            )
+        .catch((err) => {
+            console.log(err)
+                      res.status(404).json({message: 'data not found'})
+            } )
+            
+            
 })
 
 //displays one blog at a time
