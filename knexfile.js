@@ -1,8 +1,16 @@
+require('dotenv').config()
+
+const connection = { 
+connectionString: process.env.DATABASE_URL
+
+
+}
+
 module.exports = {
 
   development: {
     client: 'pg',
-    connection: 'postgres://postgres:bacon@localhost/zprefix'
+    connection: process.env.DATABASE_URL 
   },
   staging: {
     client: 'postgresql',
